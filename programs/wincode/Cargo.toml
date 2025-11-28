@@ -1,0 +1,18 @@
+[package]
+name = "wincode-program"
+version = "0.0.0"
+edition = "2021"
+
+[lints.rust.unexpected_cfgs]
+level = "warn"
+check-cfg = [
+    'cfg(target_os, values("solana"))',
+]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+pinocchio = { workspace = true }
+tide-interface = { workspace = true, features = ["wincode"] }
+wincode = { workspace = true }

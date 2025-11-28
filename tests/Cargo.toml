@@ -1,0 +1,20 @@
+[package]
+name = "tide"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "tide"
+path = "src/main.rs"
+
+[dev-dependencies]
+mollusk-svm = "0.7"
+mollusk-svm-bencher = "0.7"
+solana-account = "3.2.0"
+solana-bpf-loader-program = "~3.0"
+solana-instruction = "3.1.0"
+solana-logger = "3.0.0"
+solana-address = "2.0"
+solana-rent = "3.0.0"
+solana-transaction-context = "~3.0.10"
+tide-interface = { workspace = true }

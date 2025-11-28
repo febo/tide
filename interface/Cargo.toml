@@ -1,0 +1,19 @@
+[package]
+name = "tide-interface"
+description = "Tide types"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+crate-type = ["rlib"]
+
+[features]
+borsh = ["dep:borsh"]
+bytemuck = ["dep:bytemuck"]
+wincode = ["dep:wincode"]
+
+[dependencies]
+borsh = { workspace = true, features = ["derive"], optional = true }
+bytemuck = { workspace = true, features = ["derive"], optional = true }
+solana-program-error = { workspace = true }
+wincode = { workspace = true, features = ["derive"], optional = true }
