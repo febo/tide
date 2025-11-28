@@ -14,11 +14,17 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    let account = unsafe { Account::transmute_unchecked(account.borrow_unchecked())? };
+    // Read something from the account.
+
+    let account = unsafe { Account::transmute_unchecked_mut(account.borrow_unchecked_mut())? };
 
     if &account.owner != owner.address().as_array() {
         return Err(ProgramError::IncorrectAuthority);
     }
+
+    // Write something to the account.
+
+    account.amount = 1_000_000_000;
 
     Ok(())
 }

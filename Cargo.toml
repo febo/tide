@@ -2,6 +2,7 @@
 resolver = "2"
 members = [
     "interface",
+    "programs/bincode",
     "programs/borsh",
     "programs/bytemuck",
     "programs/wincode", 
@@ -10,6 +11,7 @@ members = [
 ]
 
 [workspace.dependencies]
+bincode = { version = "2.0.1", default-features = false }
 borsh = { version = "1.6.0", default-features = false }
 bytemuck = { version = "1.24.0" }
 pinocchio = "0.10.0-rc.1"

@@ -8,11 +8,13 @@ edition = "2021"
 crate-type = ["rlib"]
 
 [features]
+bincode = ["dep:bincode"]
 borsh = ["dep:borsh"]
 bytemuck = ["dep:bytemuck"]
 wincode = ["dep:wincode"]
 
 [dependencies]
+bincode = { workspace = true, features = ["derive"], optional = true }
 borsh = { workspace = true, features = ["derive"], optional = true }
 bytemuck = { workspace = true, features = ["derive"], optional = true }
 solana-program-error = { workspace = true }

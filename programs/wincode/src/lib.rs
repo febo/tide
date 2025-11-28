@@ -1,6 +1,6 @@
 use pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult};
 use tide_interface::Account;
-use wincode::Deserialize;
+use wincode::{Deserialize, Serialize};
 
 // Declares the entrypoint of the program.
 entrypoint!(process_instruction);
@@ -15,12 +15,24 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    let account = Account::deserialize(unsafe { account.borrow_unchecked() })
-        .map_err(|_| ProgramError::InvalidAccountData)?;
+    let mut token_account = {
+        // SAFETY: Scoped borrow of the account data.
+        let data = unsafe { account.borrow_unchecked() };
+        Account::deserialize(data).map_err(|_| ProgramError::InvalidAccountData)?
+    };
 
-    if &account.owner != owner.address().as_array() {
+    // Read something from the account.
+
+    if &token_account.owner != owner.address().as_array() {
         return Err(ProgramError::IncorrectAuthority);
     }
+
+    // Write something to the account.
+
+    token_account.amount = 1_000_000_000;
+
+    let mut data = unsafe { account.borrow_unchecked_mut() };
+    Account::serialize_into(&mut data, &token_account).map_err(|_| ProgramError::BorshIoError)?;
 
     Ok(())
 }

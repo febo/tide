@@ -1,4 +1,4 @@
-use borsh::{BorshDeserialize, BorshSerialize};
+use bincode::{borrow_decode_from_slice, encode_into_slice};
 use pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult};
 use tide_interface::Account;
 
@@ -15,10 +15,11 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    let mut token_account = {
+    let (mut token_account, _): (Account, usize) = {
         // SAFETY: Scoped borrow of the account data.
-        let mut data = unsafe { account.borrow_unchecked() };
-        Account::deserialize(&mut data).map_err(|_| ProgramError::InvalidAccountData)?
+        let data = unsafe { account.borrow_unchecked() };
+        borrow_decode_from_slice(data, bincode::config::standard())
+            .map_err(|_| ProgramError::InvalidAccountData)?
     };
 
     // Read something from the account.
@@ -31,9 +32,8 @@ pub fn process_instruction(
 
     token_account.amount = 1_000_000_000;
 
-    let mut data = unsafe { account.borrow_unchecked_mut() };
-    token_account
-        .serialize(&mut data)
+    let data = unsafe { account.borrow_unchecked_mut() };
+    encode_into_slice(token_account, data, bincode::config::standard())
         .map_err(|_| ProgramError::BorshIoError)?;
 
     Ok(())

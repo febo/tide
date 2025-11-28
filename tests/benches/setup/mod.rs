@@ -29,7 +29,7 @@ pub fn instruction(program_id: &Address) -> (Instruction, Vec<(Address, Account)
     let mut account_data = Account::new(
         BASE_LAMPORTS,
         size_of::<tide_interface::Account>(),
-        &SYSTEM_PROGRAM,
+        program_id,
     );
     account_data.data.copy_from_slice(unsafe {
         from_raw_parts(
@@ -43,7 +43,7 @@ pub fn instruction(program_id: &Address) -> (Instruction, Vec<(Address, Account)
         (owner, Account::new(BASE_LAMPORTS, 0, &SYSTEM_PROGRAM)),
     ];
     let account_metas = vec![
-        AccountMeta::new_readonly(account, false),
+        AccountMeta::new(account, false),
         AccountMeta::new_readonly(owner, false),
     ];
 

@@ -14,12 +14,20 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    let account = bytemuck::try_from_bytes::<Account>(unsafe { account.borrow_unchecked() })
-        .map_err(|_| ProgramError::InvalidAccountData)?;
+    // SAFETY: No other account borrows exist at this point.
+    let account =
+        bytemuck::try_from_bytes_mut::<Account>(unsafe { account.borrow_unchecked_mut() })
+            .map_err(|_| ProgramError::InvalidAccountData)?;
+
+    // Read something from the account.
 
     if &account.owner != owner.address().as_array() {
         return Err(ProgramError::IncorrectAuthority);
     }
+
+    // Write something to the account.
+
+    account.amount = 1_000_000_000;
 
     Ok(())
 }
