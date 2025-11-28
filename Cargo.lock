@@ -2812,6 +2812,7 @@ dependencies = [
  "solana-instruction",
  "solana-logger",
  "solana-rent",
+ "solana-sdk-ids",
  "solana-transaction-context",
  "tide-interface",
 ]
