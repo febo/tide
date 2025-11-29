@@ -45,8 +45,8 @@ pub struct Account {
     /// The account's state.
     pub state: u8,
 
-    /// The account's state.
-    _paddinge: [u8; 7],
+    /// Padding bytes.
+    _padding: [u8; 7],
 
     /// Native token amount.
     pub native_amount: u64,
