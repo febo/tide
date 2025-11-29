@@ -2,7 +2,7 @@
   <code>tide</code>
 </h1>
 <p align="center">
-  <img width="400" alt="playground" src="https://github.com/user-attachments/assets/9ae2b22c-8ebb-49d5-bb18-039719de7618" />
+  <img width="400" alt="playground" src="https://github.com/user-attachments/assets/2b80e13a-9d9d-4689-8a67-631fcb86cf8d" />
 </p>
 
 <p align="center">
@@ -14,7 +14,7 @@
 Manipulating account data is one of the main operations of a Solana program. At the same time,
 it can be one of the most expensive.
 
-`tide` is a small benchmark of popular serialization crates, from zero-copy ones to borsh, which ir used by Anchor.
+`tide` is a small benchmark of popular serialization crates, from zero-copy ones to borsh, which is used by Anchor.
 It is not indended to be exhaustive, but to give an idea how they are used and their performace in
 term of compute units consumed.
 
