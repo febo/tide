@@ -56,9 +56,9 @@ Programs read and update data on the account. It reads a `Pubkey`, owner of the 
 
 A [`Makefile`](./Makefile) is provided with basic commands to:
 * `all`: build all programs &mdash; his is required before running the benchmark.
-* `bench-tests`: run the benchmark.
-* `build-sbf-%`: build an individual program &mdash; `%` is the serialization name.
-* `test-benchmark`: run the tests.
+* `bench`: run the benchmark.
+* `build-sbf-%`: build an individual program &mdash; `%` is the serialization program name (e.g., `programs-transmute`).
+* `tests`: run the tests.
 
 To execute the benchmark, it is first necessary to build all programs:
 ```bash
