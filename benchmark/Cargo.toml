@@ -3,11 +3,7 @@ name = "tide"
 edition = "2021"
 publish = false
 
-[[bin]]
-name = "tide"
-path = "src/main.rs"
-
-[dev-dependencies]
+[dependencies]
 mollusk-svm = "0.7"
 mollusk-svm-bencher = "0.7"
 solana-account = "3.2.0"
@@ -19,3 +15,11 @@ solana-rent = "3.0.0"
 solana-sdk-ids = "3.0.0"
 solana-transaction-context = "~3.0.10"
 tide-interface = { workspace = true }
+
+[dev-dependencies]
+bincode = { workspace = true }
+borsh = { workspace = true }
+bytemuck = { workspace = true }
+tide-interface = { workspace = true, features = ["full"] }
+wincode = { workspace = true }
+zerocopy = { workspace = true }

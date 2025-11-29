@@ -9,6 +9,8 @@ use bytemuck::{Pod, Zeroable};
 use solana_program_error::ProgramError;
 #[cfg(feature = "wincode")]
 use wincode::{SchemaRead, SchemaWrite};
+#[cfg(feature = "zerocopy")]
+use zerocopy::{FromBytes, Immutable, IntoBytes, KnownLayout};
 
 /// A public key (32 bytes).
 pub type Pubkey = [u8; 32];
@@ -22,6 +24,10 @@ pub type Pubkey = [u8; 32];
 #[cfg_attr(feature = "borsh", derive(BorshDeserialize, BorshSerialize))]
 #[cfg_attr(feature = "bytemuck", derive(Copy, Clone, Pod, Zeroable))]
 #[cfg_attr(feature = "wincode", derive(SchemaWrite, SchemaRead))]
+#[cfg_attr(
+    feature = "zerocopy",
+    derive(KnownLayout, FromBytes, Immutable, IntoBytes)
+)]
 #[derive(Debug, Default)]
 pub struct Account {
     /// The mint associated with this account

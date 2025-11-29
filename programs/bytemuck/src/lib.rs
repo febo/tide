@@ -15,19 +15,20 @@ pub fn process_instruction(
     };
 
     // SAFETY: No other account borrows exist at this point.
-    let account =
+    let token_account =
         bytemuck::try_from_bytes_mut::<Account>(unsafe { account.borrow_unchecked_mut() })
             .map_err(|_| ProgramError::InvalidAccountData)?;
 
     // Read something from the account.
 
-    if &account.owner != owner.address().as_array() {
+    if &token_account.owner != owner.address().as_array() {
         return Err(ProgramError::IncorrectAuthority);
     }
 
     // Write something to the account.
 
-    account.amount = 1_000_000_000;
+    token_account.state = 255;
+    token_account.amount = 1_000_000_000;
 
     Ok(())
 }

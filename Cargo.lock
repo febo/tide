@@ -2804,6 +2804,9 @@ dependencies = [
 name = "tide"
 version = "0.0.0"
 dependencies = [
+ "bincode 2.0.1",
+ "borsh",
+ "bytemuck",
  "mollusk-svm",
  "mollusk-svm-bencher",
  "solana-account",
@@ -2815,6 +2818,8 @@ dependencies = [
  "solana-sdk-ids",
  "solana-transaction-context",
  "tide-interface",
+ "wincode",
+ "zerocopy",
 ]
 
 [[package]]
@@ -2826,6 +2831,7 @@ dependencies = [
  "bytemuck",
  "solana-program-error",
  "wincode",
+ "zerocopy",
 ]
 
 [[package]]
@@ -3154,6 +3160,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.111",
+]
+
+[[package]]
+name = "zerocopy-program"
+version = "0.0.0"
+dependencies = [
+ "pinocchio",
+ "tide-interface",
+ "zerocopy",
 ]
 
 [[package]]

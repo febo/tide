@@ -1,13 +1,14 @@
 [workspace]
 resolver = "2"
 members = [
+    "benchmark",
     "interface",
     "programs/bincode",
     "programs/borsh",
     "programs/bytemuck",
     "programs/wincode", 
     "programs/transmute",
-    "tests"
+    "programs/zerocopy"
 ]
 
 [workspace.dependencies]
@@ -19,3 +20,4 @@ solana-address = "2.0.0"
 solana-program-error = "3.0.0"
 tide-interface = { version = "0.0.0", path = "interface" }
 wincode = "0.2.1"
+zerocopy = "0.8.30"

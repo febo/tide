@@ -1,6 +1,6 @@
-use bincode::{borrow_decode_from_slice, encode_into_slice};
 use pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult};
 use tide_interface::Account;
+use zerocopy::FromBytes;
 
 // Declares the entrypoint of the program.
 entrypoint!(process_instruction);
@@ -15,12 +15,9 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    let (mut token_account, _): (Account, usize) = {
-        // SAFETY: Scoped borrow of the account data.
-        let data = unsafe { account.borrow_unchecked() };
-        borrow_decode_from_slice(data, bincode::config::standard())
-            .map_err(|_| ProgramError::InvalidAccountData)?
-    };
+    // SAFETY: No other account borrows exist at this point.
+    let token_account = Account::mut_from_bytes(unsafe { account.borrow_unchecked_mut() })
+        .map_err(|_| ProgramError::InvalidAccountData)?;
 
     // Read something from the account.
 
@@ -32,10 +29,6 @@ pub fn process_instruction(
 
     token_account.state = 255;
     token_account.amount = 1_000_000_000;
-
-    let data = unsafe { account.borrow_unchecked_mut() };
-    encode_into_slice(token_account, data, bincode::config::standard())
-        .map_err(|_| ProgramError::BorshIoError)?;
 
     Ok(())
 }

@@ -11,7 +11,9 @@ crate-type = ["rlib"]
 bincode = ["dep:bincode"]
 borsh = ["dep:borsh"]
 bytemuck = ["dep:bytemuck"]
+full = ["bincode", "borsh", "bytemuck", "wincode", "zerocopy"]
 wincode = ["dep:wincode"]
+zerocopy = ["dep:zerocopy"]
 
 [dependencies]
 bincode = { workspace = true, features = ["derive"], optional = true }
@@ -19,3 +21,4 @@ borsh = { workspace = true, features = ["derive"], optional = true }
 bytemuck = { workspace = true, features = ["derive"], optional = true }
 solana-program-error = { workspace = true }
 wincode = { workspace = true, features = ["derive"], optional = true }
+zerocopy = { workspace = true, features = ["derive"], optional = true }

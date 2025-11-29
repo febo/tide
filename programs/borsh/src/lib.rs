@@ -29,6 +29,7 @@ pub fn process_instruction(
 
     // Write something to the account.
 
+    token_account.state = 255;
     token_account.amount = 1_000_000_000;
 
     let mut data = unsafe { account.borrow_unchecked_mut() };
