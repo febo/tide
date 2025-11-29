@@ -10,6 +10,12 @@ nightly = +${RUST_TOOLCHAIN_NIGHTLY}
 pattern-dir = $(firstword $(subst -, ,$1))
 find-pattern-dir = $(findstring $(call pattern-dir,$1)-,$1)
 make-path = $(subst $(call find-pattern-dir,$1),$(subst -,/,$(call find-pattern-dir,$1)),$1)
+# Convert 'programs/anything' to 'programs-anything'.
+program-target = $(subst /,-,$(patsubst programs/%,programs-%,$1))
+# All files directly inside programs.
+PROGRAMS := $(wildcard programs/*)
+# Generate the dashed target program names.
+PROGRAM_TARGETS := $(foreach src,$(PROGRAMS),$(call program-target,$(src)))
 
 rust-toolchain-nightly:
 	@echo ${RUST_TOOLCHAIN_NIGHTLY}
@@ -34,8 +40,8 @@ clippy-%:
 format-check-%:
 	cargo $(nightly) fmt --check --manifest-path $(call make-path,$*)/Cargo.toml $(ARGS)
 
-bench-%:
-	cargo $(nightly) bench --manifest-path $(call make-path,$*)/Cargo.toml $(ARGS)
+bench:
+	cargo $(nightly) bench --manifest-path benchmark/Cargo.toml $(ARGS)
 
 format-rust:
 	cargo $(nightly) fmt --all $(ARGS)
@@ -43,5 +49,10 @@ format-rust:
 build-sbf-%:
 	cargo build-sbf --manifest-path $(call make-path,$*)/Cargo.toml $(ARGS) --tools-version v1.52
 
-test-%:
-	SBF_OUT_DIR=$(PWD)/target/deploy cargo $(nightly) test --manifest-path $(call make-path,$*)/Cargo.toml $(ARGS)
+tests:
+	SBF_OUT_DIR=$(PWD)/target/deploy cargo $(nightly) test --manifest-path benchmark/Cargo.toml $(ARGS)
+
+all:
+	@for dir in $(PROGRAM_TARGETS); do \
+		$(MAKE) build-sbf-$$dir; \
+	done

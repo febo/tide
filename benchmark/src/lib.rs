@@ -19,6 +19,9 @@ pub fn setup(program_id: &Address, name: &'static str) -> Mollusk {
     Mollusk::new(program_id, name)
 }
 
+/// Create an instruction and associated accounts for testing.
+///
+/// The account is created with only the `owner` field set to a unique address.
 pub fn instruction(program_id: &Address) -> (Instruction, Vec<(Address, Account)>) {
     let account = Address::new_unique();
     let owner = Address::new_unique();
