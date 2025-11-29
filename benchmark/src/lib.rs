@@ -22,12 +22,21 @@ pub fn setup(program_id: &Address, name: &'static str) -> Mollusk {
 /// Create an instruction and associated accounts for testing.
 ///
 /// The account is created with only the `owner` field set to a unique address.
+#[deprecated(note = "Use `instruction_full` or `instruction_with_type` instead")]
 pub fn instruction(program_id: &Address) -> (Instruction, Vec<(Address, Account)>) {
+    instruction_with_type(program_id, tide_interface::Instruction::Full)
+}
+
+pub fn instruction_with_type(
+    program_id: &Address,
+    instruction_type: tide_interface::Instruction,
+) -> (Instruction, Vec<(Address, Account)>) {
     let account = Address::new_unique();
     let owner = Address::new_unique();
 
     let mut state = tide_interface::Account::default();
     state.owner = owner.to_bytes();
+    state.amount = 500_000_000; // Set initial amount for update tests
 
     let mut account_data = Account::new(
         BASE_LAMPORTS,
@@ -54,8 +63,20 @@ pub fn instruction(program_id: &Address) -> (Instruction, Vec<(Address, Account)
         Instruction {
             program_id: *program_id,
             accounts: account_metas,
-            data: vec![],
+            data: vec![instruction_type as u8],
         },
         accounts,
     )
+}
+
+pub fn instruction_full(program_id: &Address) -> (Instruction, Vec<(Address, Account)>) {
+    instruction_with_type(program_id, tide_interface::Instruction::Full)
+}
+
+pub fn instruction_read_owner(program_id: &Address) -> (Instruction, Vec<(Address, Account)>) {
+    instruction_with_type(program_id, tide_interface::Instruction::ReadOwner)
+}
+
+pub fn instruction_update_amount(program_id: &Address) -> (Instruction, Vec<(Address, Account)>) {
+    instruction_with_type(program_id, tide_interface::Instruction::UpdateAmount)
 }

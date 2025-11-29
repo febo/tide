@@ -6,6 +6,7 @@ use bincode::{Decode, Encode};
 use borsh::{BorshDeserialize, BorshSerialize};
 #[cfg(feature = "bytemuck")]
 use bytemuck::{Pod, Zeroable};
+use core::mem::size_of;
 use solana_program_error::ProgramError;
 #[cfg(feature = "wincode")]
 use wincode::{SchemaRead, SchemaWrite};
@@ -14,6 +15,32 @@ use zerocopy::{FromBytes, Immutable, IntoBytes, KnownLayout};
 
 /// A public key (32 bytes).
 pub type Pubkey = [u8; 32];
+
+#[repr(u8)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Instruction {
+    Full = 0,
+    ReadOwner = 1,
+    UpdateAmount = 2,
+}
+
+impl Instruction {
+    pub fn try_from_slice(data: &[u8]) -> Result<Self, ProgramError> {
+        match data.first() {
+            Some(0) => Ok(Self::Full),
+            Some(1) => Ok(Self::ReadOwner),
+            Some(2) => Ok(Self::UpdateAmount),
+            _ => Err(ProgramError::InvalidInstructionData),
+        }
+    }
+}
+
+pub mod offsets {
+    pub const OWNER: usize = 32;
+    pub const OWNER_SIZE: usize = 32;
+    pub const AMOUNT: usize = 64;
+    pub const AMOUNT_SIZE: usize = 8;
+}
 
 /// Account data structure for a token account.
 ///
@@ -45,8 +72,7 @@ pub struct Account {
     /// The account's state.
     pub state: u8,
 
-    /// The account's state.
-    _paddinge: [u8; 7],
+    _padding: [u8; 7],
 
     /// Native token amount.
     pub native_amount: u64,
