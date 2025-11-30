@@ -75,7 +75,7 @@ located at `./target/benches`.
 ```
 | Name               | CUs | Delta |
 |--------------------|-----|-------|
-| bincode::account   | 356 |  --   |
+| bincode::account   | 214 |  --   |
 | borsh::account     | 617 |  --   |
 | bytemuck::account  | 40  |  --   |
 | transmute::account | 36  |  --   |
