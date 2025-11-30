@@ -70,7 +70,7 @@ Followed by:
 make bench
 ```
 
-After the execution, a mollusk with report the compute units in a `compute_units.md`
+After the execution, mollusk will report the compute units in a `compute_units.md`
 located at `./target/benches`.
 ```
 | Name               | CUs | Delta |
