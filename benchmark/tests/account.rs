@@ -34,7 +34,7 @@ fn test_account_with_bincode() {
     assert!(account.is_some());
 
     let data = &account.unwrap().data;
-    let (account, _): (Account, usize) = borrow_decode_from_slice(data, standard()).unwrap();
+    let (account, _): (Account, usize) = borrow_decode_from_slice(data, standard().with_fixed_int_encoding()).unwrap();
 
     assert_eq!(account.state, 255);
     assert_eq!(account.amount, 1_000_000_000);

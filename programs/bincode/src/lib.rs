@@ -15,10 +15,12 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
+    let config = bincode::config::standard().with_fixed_int_encoding();
+    
     let (mut token_account, _): (Account, usize) = {
         // SAFETY: Scoped borrow of the account data.
         let data = unsafe { account.borrow_unchecked() };
-        borrow_decode_from_slice(data, bincode::config::standard())
+        borrow_decode_from_slice(data, config)
             .map_err(|_| ProgramError::InvalidAccountData)?
     };
 
@@ -34,7 +36,7 @@ pub fn process_instruction(
     token_account.amount = 1_000_000_000;
 
     let data = unsafe { account.borrow_unchecked_mut() };
-    encode_into_slice(token_account, data, bincode::config::standard())
+    encode_into_slice(token_account, data, config)
         .map_err(|_| ProgramError::BorshIoError)?;
 
     Ok(())
