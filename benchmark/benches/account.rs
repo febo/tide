@@ -12,9 +12,13 @@ const DEFAULT_LOADER_KEY: Address = solana_sdk_ids::bpf_loader_upgradeable::ID;
 #[cfg(test)]
 #[bench]
 fn run(_bencher: &mut Bencher) {
-    // bincode
-    let bincode_id = Address::from_str_const("Bincode111111111111111111111111111111111111");
-    let mut mollusk = setup(&bincode_id, "bincode_program");
+    // bincode V1
+    let bincode_v1_id = Address::from_str_const("BincodeV11111111111111111111111111111111111");
+    let mut mollusk = setup(&bincode_v1_id, "bincode_v1_program");
+
+    // bincode V2
+    let bincode_v2_id = Address::from_str_const("BincodeV21111111111111111111111111111111111");
+    mollusk.add_program(&bincode_v2_id, "bincode_v2_program", &DEFAULT_LOADER_KEY);
 
     // borsh
     let borsh_id = Address::from_str_const("Borsh111111111111111111111111111111111111111");
@@ -40,8 +44,11 @@ fn run(_bencher: &mut Bencher) {
         .must_pass(true)
         .out_dir("../target/benches");
 
-    let (ix, accounts) = instruction(&bincode_id);
-    bencher = bencher.bench(("bincode::account", &ix, &accounts));
+    let (ix, accounts) = instruction(&bincode_v1_id);
+    bencher = bencher.bench(("bincode_v1::account", &ix, &accounts));
+
+    let (ix, accounts) = instruction(&bincode_v2_id);
+    bencher = bencher.bench(("bincode_v2::account", &ix, &accounts));
 
     let (ix, accounts) = instruction(&borsh_id);
     bencher = bencher.bench(("borsh::account", &ix, &accounts));

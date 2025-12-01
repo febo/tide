@@ -1,5 +1,5 @@
 [package]
-name = "bincode-program"
+name = "bincode-v2-program"
 version = "0.0.0"
 edition = "2021"
 
@@ -15,4 +15,4 @@ crate-type = ["cdylib"]
 [dependencies]
 bincode = { workspace = true }
 pinocchio = { workspace = true }
-tide-interface = { workspace = true, features = ["bincode"] }
+tide-interface = { workspace = true, features = ["bincode-v2"] }

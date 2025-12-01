@@ -8,10 +8,11 @@ edition = "2021"
 crate-type = ["rlib"]
 
 [features]
-bincode = ["dep:bincode"]
+bincode-v1 = ["dep:serde"]
+bincode-v2 = ["dep:bincode"]
 borsh = ["dep:borsh"]
 bytemuck = ["dep:bytemuck"]
-full = ["bincode", "borsh", "bytemuck", "wincode", "zerocopy"]
+full = ["bincode-v1", "bincode-v2", "borsh", "bytemuck", "wincode", "zerocopy"]
 wincode = ["dep:wincode"]
 zerocopy = ["dep:zerocopy"]
 
@@ -19,6 +20,7 @@ zerocopy = ["dep:zerocopy"]
 bincode = { workspace = true, features = ["derive"], optional = true }
 borsh = { workspace = true, features = ["derive"], optional = true }
 bytemuck = { workspace = true, features = ["derive"], optional = true }
+serde = { workspace = true, features = ["derive"], optional = true }
 solana-program-error = { workspace = true }
 wincode = { workspace = true, features = ["derive"], optional = true }
 zerocopy = { workspace = true, features = ["derive"], optional = true }

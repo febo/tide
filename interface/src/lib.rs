@@ -1,11 +1,13 @@
 #![no_std]
 
-#[cfg(feature = "bincode")]
+#[cfg(feature = "bincode-v2")]
 use bincode::{Decode, Encode};
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSerialize};
 #[cfg(feature = "bytemuck")]
 use bytemuck::{Pod, Zeroable};
+#[cfg(feature = "bincode-v1")]
+use serde::{Deserialize, Serialize};
 use solana_program_error::ProgramError;
 #[cfg(feature = "wincode")]
 use wincode::{SchemaRead, SchemaWrite};
@@ -20,7 +22,8 @@ pub type Pubkey = [u8; 32];
 /// This is a simplified version of the SPL Token account structure
 /// to demonstrate the concept.
 #[repr(C)]
-#[cfg_attr(feature = "bincode", derive(Decode, Encode))]
+#[cfg_attr(feature = "bincode-v1", derive(Deserialize, Serialize))]
+#[cfg_attr(feature = "bincode-v2", derive(Decode, Encode))]
 #[cfg_attr(feature = "borsh", derive(BorshDeserialize, BorshSerialize))]
 #[cfg_attr(feature = "bytemuck", derive(Copy, Clone, Pod, Zeroable))]
 #[cfg_attr(feature = "wincode", derive(SchemaWrite, SchemaRead))]
