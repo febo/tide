@@ -78,10 +78,10 @@ located at `./target/benches`.
 | bincode_v1::account  | 8127 |  --   |
 | bincode_v2::account  |  214 |  --   |
 | borsh::account       |  617 |  --   |
-| bytemuck::account    |  40  |  --   |
-| transmute::account   |  36  |  --   |
-| wincode::account     |  62  |  --   |
-| zerocopy::account    |  40  |  --   |
+| bytemuck::account    |   40 |  --   |
+| transmute::account   |   36 |  --   |
+| wincode::account     |   62 |  --   |
+| zerocopy::account    |   40 |  --   |
 ```
 
 ## License
