@@ -1,0 +1,18 @@
+[package]
+name = "bincode-v1-program"
+version = "0.0.0"
+edition = "2021"
+
+[lints.rust.unexpected_cfgs]
+level = "warn"
+check-cfg = [
+    'cfg(target_os, values("solana"))',
+]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+bincode-v1 = { workspace = true }
+pinocchio = { workspace = true }
+tide-interface = { workspace = true, features = ["bincode-v1"] }

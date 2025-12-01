@@ -73,14 +73,15 @@ make bench
 After the execution, mollusk will report the compute units in a `compute_units.md`
 located at `./target/benches`.
 ```
-| Name               | CUs | Delta |
-|--------------------|-----|-------|
-| bincode::account   | 214 |  --   |
-| borsh::account     | 617 |  --   |
-| bytemuck::account  | 40  |  --   |
-| transmute::account | 36  |  --   |
-| wincode::account   | 62  |  --   |
-| zerocopy::account  | 40  |  --   |
+| Name                 | CUs  | Delta |
+|----------------------|------|-------|
+| bincode_v1::account  | 8127 |  --   |
+| bincode_v2::account  |  214 |  --   |
+| borsh::account       |  617 |  --   |
+| bytemuck::account    |  40  |  --   |
+| transmute::account   |  36  |  --   |
+| wincode::account     |  62  |  --   |
+| zerocopy::account    |  40  |  --   |
 ```
 
 ## License
