@@ -13,7 +13,9 @@ pub const BASE_LAMPORTS: u64 = 2_000_000_000u64;
 
 /// Create a new Mollusk instance for the given program ID and name.
 pub fn setup(program_id: &Address, name: &'static str) -> Mollusk {
-    std::env::set_var("SBF_OUT_DIR", "../target/deploy");
+    unsafe {
+        std::env::set_var("SBF_OUT_DIR", "../target/deploy");
+    }
     solana_logger::setup();
 
     Mollusk::new(program_id, name)
