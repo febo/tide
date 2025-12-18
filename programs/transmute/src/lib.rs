@@ -1,8 +1,15 @@
-use pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult};
+#![no_std]
+
+use pinocchio::{
+    error::ProgramError, no_allocator, nostd_panic_handler, program_entrypoint, AccountView,
+    Address, ProgramResult,
+};
 use tide_interface::Account;
 
 // Declares the entrypoint of the program.
-entrypoint!(process_instruction);
+program_entrypoint!(process_instruction);
+no_allocator!();
+nostd_panic_handler!();
 
 /// Instruction processor
 pub fn process_instruction(

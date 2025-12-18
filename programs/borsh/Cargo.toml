@@ -14,5 +14,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 borsh = { workspace = true }
-pinocchio = { workspace = true }
+pinocchio = { workspace = true, features = ["alloc"] }
 tide-interface = { workspace = true, features = ["borsh"] }

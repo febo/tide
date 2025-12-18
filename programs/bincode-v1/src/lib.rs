@@ -1,9 +1,16 @@
+#![no_std]
+
 use bincode_v1::{deserialize, serialize_into};
-use pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult};
+use pinocchio::{
+    default_allocator, error::ProgramError, nostd_panic_handler, program_entrypoint, AccountView,
+    Address, ProgramResult,
+};
 use tide_interface::Account;
 
 // Declares the entrypoint of the program.
-entrypoint!(process_instruction);
+program_entrypoint!(process_instruction);
+default_allocator!();
+nostd_panic_handler!();
 
 /// Instruction processor
 pub fn process_instruction(

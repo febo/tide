@@ -14,5 +14,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 bincode-v1 = { workspace = true }
-pinocchio = { workspace = true }
+pinocchio = { workspace = true, features = ["alloc"] }
 tide-interface = { workspace = true, features = ["bincode-v1"] }

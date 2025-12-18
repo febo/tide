@@ -41,18 +41,23 @@ format-check-%:
 	cargo $(nightly) fmt --check --manifest-path $(call make-path,$*)/Cargo.toml $(ARGS)
 
 bench:
+	@# Temporarily move .cargo to avoid using local config during benchmarks.
+	@-mv .cargo .cargo-temp 2>/dev/null
 	cargo $(nightly) bench --manifest-path benchmark/Cargo.toml $(ARGS)
+	@-mv .cargo-temp .cargo 2>/dev/null
 
 format-rust:
 	cargo $(nightly) fmt --all $(ARGS)
 
-build-sbf-%:
-	cargo build-sbf --manifest-path $(call make-path,$*)/Cargo.toml $(ARGS) --tools-version v1.52
+build-bpf-%:
+	@# Not great but avoid to have to manually rename .cargo each time benches fail.
+	@-mv .cargo-temp .cargo 2>/dev/null
+	cargo $(nightly) build-bpf --manifest-path $(call make-path,$*)/Cargo.toml $(ARGS)
 
 tests:
-	SBF_OUT_DIR=$(PWD)/target/deploy cargo $(nightly) test --manifest-path benchmark/Cargo.toml $(ARGS)
+	cargo $(nightly) test --manifest-path benchmark/Cargo.toml $(ARGS)
 
 all:
 	@for dir in $(PROGRAM_TARGETS); do \
-		$(MAKE) build-sbf-$$dir; \
+		$(MAKE) build-bpf-$$dir; \
 	done

@@ -1,9 +1,16 @@
+#![no_std]
+
 use bincode::{borrow_decode_from_slice, encode_into_slice};
-use pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult};
+use pinocchio::{
+    default_allocator, error::ProgramError, nostd_panic_handler, program_entrypoint, AccountView,
+    Address, ProgramResult,
+};
 use tide_interface::Account;
 
 // Declares the entrypoint of the program.
-entrypoint!(process_instruction);
+program_entrypoint!(process_instruction);
+default_allocator!();
+nostd_panic_handler!();
 
 /// Instruction processor
 pub fn process_instruction(
@@ -16,12 +23,11 @@ pub fn process_instruction(
     };
 
     let config = bincode::config::standard().with_fixed_int_encoding();
-    
+
     let (mut token_account, _): (Account, usize) = {
         // SAFETY: Scoped borrow of the account data.
         let data = unsafe { account.borrow_unchecked() };
-        borrow_decode_from_slice(data, config)
-            .map_err(|_| ProgramError::InvalidAccountData)?
+        borrow_decode_from_slice(data, config).map_err(|_| ProgramError::InvalidAccountData)?
     };
 
     // Read something from the account.
@@ -36,8 +42,7 @@ pub fn process_instruction(
     token_account.amount = 1_000_000_000;
 
     let data = unsafe { account.borrow_unchecked_mut() };
-    encode_into_slice(token_account, data, config)
-        .map_err(|_| ProgramError::BorshIoError)?;
+    encode_into_slice(token_account, data, config).map_err(|_| ProgramError::BorshIoError)?;
 
     Ok(())
 }
