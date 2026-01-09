@@ -123,6 +123,22 @@ fn test_account_with_wincode() {
 }
 
 #[test]
+fn test_account_with_wincode_zerocopy() {
+    let mollusk = setup(&PROGRAM_ID, "wincode_zerocopy_program");
+
+    let (key, result) = run(&mollusk);
+
+    let account = result.get_account(&key);
+    assert!(account.is_some());
+
+    let data = &account.unwrap().data;
+    let account = <Account as wincode::ZeroCopy>::from_bytes(data).unwrap();
+
+    assert_eq!(account.state, 255);
+    assert_eq!(account.amount, 1_000_000_000);
+}
+
+#[test]
 fn test_account_with_zerocopy() {
     let mollusk = setup(&PROGRAM_ID, "zerocopy_program");
 

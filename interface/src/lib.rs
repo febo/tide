@@ -27,6 +27,7 @@ pub type Pubkey = [u8; 32];
 #[cfg_attr(feature = "borsh", derive(BorshDeserialize, BorshSerialize))]
 #[cfg_attr(feature = "bytemuck", derive(Copy, Clone, Pod, Zeroable))]
 #[cfg_attr(feature = "wincode", derive(SchemaWrite, SchemaRead))]
+#[cfg_attr(feature = "wincode", wincode(assert_zero_copy))]
 #[cfg_attr(
     feature = "zerocopy",
     derive(KnownLayout, FromBytes, Immutable, IntoBytes)
@@ -70,7 +71,7 @@ impl Account {
     #[inline(always)]
     pub unsafe fn transmute_unchecked(bytes: &[u8]) -> Result<&Self, ProgramError> {
         if bytes.len() != size_of::<Self>() {
-            return Err(ProgramError::InvalidAccountData);
+            return Err(invalid_account_data_error());
         }
         Ok(&*(bytes.as_ptr() as *const Self))
     }
@@ -83,8 +84,15 @@ impl Account {
     #[inline(always)]
     pub unsafe fn transmute_unchecked_mut(bytes: &mut [u8]) -> Result<&mut Self, ProgramError> {
         if bytes.len() != size_of::<Self>() {
-            return Err(ProgramError::InvalidAccountData);
+            return Err(invalid_account_data_error());
         }
         Ok(&mut *(bytes.as_mut_ptr() as *mut Self))
     }
+}
+
+// Mark the error as cold since it is not expected to be hit in
+// normal execution.
+#[cold]
+fn invalid_account_data_error() -> ProgramError {
+    ProgramError::InvalidAccountData
 }

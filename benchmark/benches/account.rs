@@ -36,6 +36,15 @@ fn run(_bencher: &mut Bencher) {
     let wincode_id = Address::from_str_const("Wincode111111111111111111111111111111111111");
     mollusk.add_program(&wincode_id, "wincode_program", &DEFAULT_LOADER_KEY);
 
+    // wincode zerocopy
+    let wincode_zerocopy_id =
+        Address::from_str_const("WincodeZerocopy1111111111111111111111111111");
+    mollusk.add_program(
+        &wincode_zerocopy_id,
+        "wincode_zerocopy_program",
+        &DEFAULT_LOADER_KEY,
+    );
+
     // zerocopy
     let zerocopy_id = Address::from_str_const("Zerocopy11111111111111111111111111111111111");
     mollusk.add_program(&zerocopy_id, "zerocopy_program", &DEFAULT_LOADER_KEY);
@@ -61,6 +70,9 @@ fn run(_bencher: &mut Bencher) {
 
     let (ix, accounts) = instruction(&wincode_id);
     bencher = bencher.bench(("wincode::account", &ix, &accounts));
+
+    let (ix, accounts) = instruction(&wincode_zerocopy_id);
+    bencher = bencher.bench(("wincode_zerocopy::account", &ix, &accounts));
 
     let (ix, accounts) = instruction(&zerocopy_id);
     bencher = bencher.bench(("zerocopy::account", &ix, &accounts));

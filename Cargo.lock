@@ -3038,9 +3038,8 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 
 [[package]]
 name = "wincode"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d814d39f8894e2f0b7c6dac8a4bf1f36bf40c9415c2ff02146d6f777a91e11d3"
+version = "0.2.5"
+source = "git+https://github.com/anza-xyz/wincode.git?branch=config#415d71a689900b772bcd955b1328b89c01c3f162"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3050,9 +3049,8 @@ dependencies = [
 
 [[package]]
 name = "wincode-derive"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a73ae1f9280de1c129b7baa5899ff75682ac67da1224d82d1b473a2ad1cbb49a"
+version = "0.2.3"
+source = "git+https://github.com/anza-xyz/wincode.git?branch=config#415d71a689900b772bcd955b1328b89c01c3f162"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -3062,6 +3060,15 @@ dependencies = [
 
 [[package]]
 name = "wincode-program"
+version = "0.0.0"
+dependencies = [
+ "pinocchio",
+ "tide-interface",
+ "wincode",
+]
+
+[[package]]
+name = "wincode-zerocopy-program"
 version = "0.0.0"
 dependencies = [
  "pinocchio",
