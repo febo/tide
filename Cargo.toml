@@ -18,11 +18,10 @@ bincode-v1 = { package = "bincode", version = "1.3.3" }
 bincode = { version = "2.0.1", default-features = false }
 borsh = { version = "1.6.0", default-features = false }
 bytemuck = { version = "1.24.0" }
-pinocchio = "0.10.0-rc.1"
+pinocchio = "0.10.1"
 serde = { version = "1.0.228", default-features = false }
 solana-address = "2.0.0"
 solana-program-error = "3.0.0"
 tide-interface = { version = "0.0.0", path = "interface" }
-wincode = { version = "0.2.5", git = "https://github.com/anza-xyz/wincode.git", branch = "config" }
-wincode-derive = { version = "0.2.3", git = "https://github.com/anza-xyz/wincode.git", branch = "config" }
+wincode = { version = "0.3.1" }
 zerocopy = "0.8.30"

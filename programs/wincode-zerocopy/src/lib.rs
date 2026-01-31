@@ -1,15 +1,12 @@
 use pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult};
 use tide_interface::Account;
-use wincode::{
-    config::{ConfigBuilder, DefaultConfig, ZeroCopy, DEFAULT_PREALLOCATION_SIZE_LIMIT},
-    len::BincodeLen,
-};
+use wincode::config::{Configuration, DefaultConfig, ZeroCopy};
 
 /// Define a global configuration with zero-copy alignment check disabled.
 ///
 /// When loading zero-copy types from an account view, alignment checks are skipped
 /// since the runtime guarantees proper alignment of the account data.
-const WINCODE_ZEROCOPY_CONFIG: ConfigBuilder<false, DEFAULT_PREALLOCATION_SIZE_LIMIT, BincodeLen> =
+const WINCODE_ZEROCOPY_CONFIG: Configuration<false> =
     unsafe { DefaultConfig::default().disable_zero_copy_align_check() };
 
 // Declares the entrypoint of the program.

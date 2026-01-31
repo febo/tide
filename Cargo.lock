@@ -1399,6 +1399,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
 
 [[package]]
+name = "pastey"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b867cad97c0791bbd3aaa6472142568c6c9e8f71937e98379f584cfb0cf35bec"
+
+[[package]]
 name = "percentage"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1409,9 +1415,9 @@ dependencies = [
 
 [[package]]
 name = "pinocchio"
-version = "0.10.0-rc.1"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57b0544c995d8267e78362c6c37ca70c72c489895f2c07aa91e404b1667cc8e6"
+checksum = "dfad955b2fe8f736e1ea276ebb31820d778ee69c1161146054e9b31be2e73326"
 dependencies = [
  "solana-account-view",
  "solana-address 2.0.0",
@@ -3038,9 +3044,11 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 
 [[package]]
 name = "wincode"
-version = "0.2.5"
-source = "git+https://github.com/anza-xyz/wincode.git?branch=config#415d71a689900b772bcd955b1328b89c01c3f162"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9f27315388539620cef3386d77b05305dbfb7fccbd32eead533a7a3779313532"
 dependencies = [
+ "pastey",
  "proc-macro2",
  "quote",
  "thiserror 2.0.17",
@@ -3049,8 +3057,9 @@ dependencies = [
 
 [[package]]
 name = "wincode-derive"
-version = "0.2.3"
-source = "git+https://github.com/anza-xyz/wincode.git?branch=config#415d71a689900b772bcd955b1328b89c01c3f162"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d89833c7743abd1a831b7eb0fdfd7210bd8bedc297435e9426aad9b63d7c7f77"
 dependencies = [
  "darling",
  "proc-macro2",
