@@ -17,7 +17,11 @@ pub fn process_instruction(
     // Read something from the account.
 
     // SAFETY: No other account borrows exist at this point.
+    //
+    // In general, the safer `try_borrow_mut` method should be used,
+    // unless it can be guaranteed that no other borrows exist.
     let account_data = unsafe { account.borrow_unchecked_mut() };
+
     let token_account = unsafe { Account::transmute_unchecked_mut(account_data)? };
 
     if &token_account.owner != owner.address().as_array() {

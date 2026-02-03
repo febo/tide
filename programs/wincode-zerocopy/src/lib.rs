@@ -23,7 +23,11 @@ pub fn process_instruction(
     };
 
     // SAFETY: No other account borrows exist at this point.
+    //
+    // In general, the safer `try_borrow_mut` method should be used,
+    // unless it can be guaranteed that no other borrows exist.
     let account_data = unsafe { account.borrow_unchecked_mut() };
+
     let token_account = Account::from_bytes_mut(account_data, WINCODE_ZEROCOPY_CONFIG)
         .map_err(|_| ProgramError::InvalidAccountData)?;
 
