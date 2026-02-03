@@ -16,8 +16,9 @@ pub fn process_instruction(
     };
 
     // SAFETY: No other account borrows exist at this point.
-    let token_account = Account::mut_from_bytes(unsafe { account.borrow_unchecked_mut() })
-        .map_err(|_| ProgramError::InvalidAccountData)?;
+    let account_data = unsafe { account.borrow_unchecked_mut() };
+    let token_account =
+        Account::mut_from_bytes(account_data).map_err(|_| ProgramError::InvalidAccountData)?;
 
     // Read something from the account.
 

@@ -16,8 +16,9 @@ pub fn process_instruction(
 
     // Read something from the account.
 
-    let token_account =
-        unsafe { Account::transmute_unchecked_mut(account.borrow_unchecked_mut())? };
+    // SAFETY: No other account borrows exist at this point.
+    let account_data = unsafe { account.borrow_unchecked_mut() };
+    let token_account = unsafe { Account::transmute_unchecked_mut(account_data)? };
 
     if &token_account.owner != owner.address().as_array() {
         return Err(ProgramError::IncorrectAuthority);

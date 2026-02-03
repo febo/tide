@@ -22,12 +22,10 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    let token_account = {
-        // SAFETY: Scoped borrow of the account data.
-        let data = unsafe { account.borrow_unchecked_mut() };
-        Account::from_bytes_mut(data, WINCODE_ZEROCOPY_CONFIG)
-            .map_err(|_| ProgramError::InvalidAccountData)?
-    };
+    // SAFETY: No other account borrows exist at this point.
+    let account_data = unsafe { account.borrow_unchecked_mut() };
+    let token_account = Account::from_bytes_mut(account_data, WINCODE_ZEROCOPY_CONFIG)
+        .map_err(|_| ProgramError::InvalidAccountData)?;
 
     // Read something from the account.
 
